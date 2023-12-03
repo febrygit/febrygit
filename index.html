@@ -31,6 +31,12 @@
     .container {
       max-width: 700px;
       width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    body.open .container {
+      height: auto;
     }
 
     .cover-container {
@@ -301,7 +307,7 @@
       flex-flow: column;
       gap: 1rem;
       padding: 6rem 0 2rem 0;
-      background-image: url('assets/duo.jpg');
+      background-image: url("assets/duo.jpg");
       background-size: 100% auto;
       background-position: bottom;
       height: 25rem;
@@ -469,7 +475,9 @@
     document.addEventListener("DOMContentLoaded", function () {
       showSnow(true);
 
-      document.getElementById('name').innerText = decodeURI(location.search.slice(1))
+      document.getElementById("name").innerText = decodeURI(
+        location.search.slice(1)
+      );
     });
   </script>
 </head>
@@ -524,9 +532,7 @@
             letter-spacing: 3px;
             margin-bottom: 1.5rem;
           "
-        >
-          
-        </div>
+        ></div>
         <div style="margin-bottom: 5rem">
           <button class="button-buka-undangan" onclick="onBuka()">
             <svg
