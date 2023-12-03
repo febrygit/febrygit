@@ -466,10 +466,10 @@
       }
     }, 1000);
 
-    document.addEventListener("read");
-
     document.addEventListener("DOMContentLoaded", function () {
       showSnow(true);
+
+      document.getElementById('name').innerText = decodeURI(location.search.slice(1))
     });
   </script>
 </head>
@@ -517,6 +517,7 @@
           Bapak/Ibu/Saudara/i
         </div>
         <div
+          id="name"
           style="
             font-family: LondrinaSolid;
             font-size: 2rem;
@@ -524,7 +525,7 @@
             margin-bottom: 1.5rem;
           "
         >
-          Fitria
+          
         </div>
         <div style="margin-bottom: 5rem">
           <button class="button-buka-undangan" onclick="onBuka()">
