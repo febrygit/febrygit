@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    @font-face {
+      font-family: BrittanySignature;
+      src: url(assets/BrittanySignature.woff2);
+    }
+
+    @font-face {
+      font-family: Cinzel;
+      src: url(assets/Cinzel.woff2);
+    }
+
+    @font-face {
+      font-family: LondrinaSolid;
+      src: url(assets/LondrinaSolid.woff2);
+    }
+
+    body {
+      padding: 0;
+      margin: 0;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      min-height: 100vh;
+      background-color: #eee;
+      overflow: hidden;
+    }
+
+    .container {
+      max-width: 700px;
+      width: 100vw;
+    }
+
+    .cover-container {
+      left: 50%;
+      transform: translate(-50%, -50%);
+      position: absolute;
+      max-width: 600px;
+      z-index: 1;
+      max-height: 100vh;
+      overflow: hidden;
+      width: 100%;
+      top: 50%;
+      transition: opacity 1.5s;
+    }
+
+    body.open .cover-container {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .cover {
+      height: 100%;
+      position: absolute;
+      left: 50%;
+      top: 0;
+      width: 100%;
+      background-image: linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.5) 0%,
+        rgba(255, 255, 255, 0) 50%,
+        rgba(0, 0, 0, 0.5) 100%
+      );
+      max-width: 450px;
+      transform: translateX(-50%);
+      max-height: 800px;
+      color: white;
+      text-align: center;
+      min-height: 500px;
+      display: flex;
+      flex-flow: column;
+    }
+
+    .cover-title {
+      font-family: Cinzel;
+      margin-top: 4rem;
+      letter-spacing: 3px;
+    }
+
+    .button-buka-undangan {
+      border: 2px solid white;
+      background-color: transparent;
+      color: white;
+      font-family: Segoe UI;
+      border-radius: 4rem 0;
+      padding: 0.75rem 2rem;
+      font-size: 1rem;
+      cursor: pointer;
+      fill: white;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      transition: background-color 300ms, fill 300ms, color 300ms;
+    }
+
+    .button-buka-undangan:hover {
+      background-color: white;
+      color: black;
+      fill: black;
+    }
+
+    .image-cover {
+      background-image: url("assets/pic-1.jpg");
+      height: 100vh;
+      background-position: center top;
+      max-height: 1200px;
+      position: relative;
+      transform: scale(1.8);
+      filter: blur(2px) brightness(70%);
+      transition: filter 1.5s, transform 1.5s;
+      max-width: 100%;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-color: #eee;
+      position: relative;
+    }
+
+    body.open {
+      overflow: auto;
+      position: relative;
+    }
+
+    body.open .image-cover {
+      filter: none;
+      transform: scale(1);
+      max-height: 171.428vw;
+    }
+
+    .first-page {
+      transition: height 1.5s;
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    body.open .first-page {
+      height: min(171.428vw, 100vh);
+    }
+
+    .bg-premium {
+      background-image: url("assets/bg-premium.jpg");
+      width: 100%;
+      height: calc(min(350px, 50vw) + 3rem);
+      background-size: cover;
+    }
+
+    .ayat-container {
+      text-align: center;
+      padding: 0 1.5rem;
+      font-family: arial;
+    }
+
+    .ayat {
+      font-size: 18px;
+    }
+
+    .paper-container {
+      position: absolute;
+      z-index: 2;
+      height: 100%;
+      width: 100%;
+      padding: 1.5rem;
+      box-sizing: border-box;
+      top: 0;
+    }
+
+    .perkenalan {
+      width: 80%;
+      box-shadow: 10px 0px 1rem -3px #00000054;
+      height: 450px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .title {
+      position: absolute;
+      top: 7rem;
+      right: -4rem;
+      transform: rotate(-90deg) scaley(0.5);
+      font-family: BrittanySignature;
+      font-size: 4rem;
+      text-shadow: 2px 2px white;
+      letter-spacing: 3px;
+    }
+
+    .title.left {
+      left: -3.25rem;
+      right: unset;
+    }
+
+    .name {
+      width: 20rem;
+      position: absolute;
+      text-align: center;
+      display: inline-flex;
+      height: 6.5rem;
+      align-items: flex-start;
+      justify-content: center;
+      flex-flow: column;
+      padding: 1rem 3rem;
+      box-sizing: border-box;
+      overflow: hidden;
+      font-size: 0.7rem;
+      font-family: cursive;
+      gap: 0.25rem;
+      left: 50%;
+      transform: translate(-50%, -1rem);
+      bottom: 0;
+    }
+
+    .parent {
+      color: white;
+      z-index: 1;
+      position: relative;
+      text-align: left;
+    }
+
+    .fourth-container {
+      width: 90%;
+      margin-left: 5%;
+      padding-top: 3em;
+      padding-bottom: 3rem;
+      z-index: 1;
+      position: relative;
+    }
+
+    .fourth-container-image {
+      border-radius: 100rem 100rem 0 0;
+      overflow: hidden;
+      height: 19em;
+    }
+
+    .container-akad {
+      width: 30%;
+      background: #2b2b2b;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      flex: 0 0 auto;
+    }
+
+    .container-akad > div {
+      transform: rotate(-90deg);
+    }
+
+    .google-map {
+      background-color: #9e7930;
+      color: white;
+      padding: 0.5rem 1.5rem;
+      display: inline-block;
+      font-size: 0.85em;
+      font-weight: bold;
+      border-radius: 0 0 1.5rem 0;
+      cursor: pointer;
+    }
+
+    .fourth-page {
+      position: relative;
+      font-family: cursive;
+    }
+
+    .fifth-page {
+      background: #2b2b2b;
+      color: white;
+      font-family: Comic Sans MS;
+      padding: 2rem;
+      font-size: 0.75rem;
+    }
+
+    #button-salin-bca:hover,
+    #button-salin-alamat:hover {
+      outline: 2px solid white;
+    }
+
+    .ephron {
+      font-family: Times New Roman;
+      margin-bottom: 1em;
+    }
+
+    .snowflake {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: linear-gradient(white, white);
+      border-radius: 50%;
+      filter: drop-shadow(0 0 10px white);
+    }
+
+    .sixth-page {
+      text-align: center;
+      font-family: Comic Sans MS;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-flow: column;
+      gap: 1rem;
+      padding: 6rem 0 2rem 0;
+      background-image: url('assets/duo.jpg');
+      background-size: 100% auto;
+      background-position: bottom;
+      height: 25rem;
+      filter: grayscale(100);
+      justify-content: flex-end;
+      color: white;
+      text-shadow: 0px 0px 8px black;
+    }
+  </style>
+  <style>
+    @media only screen and (min-width: 768px) {
+      /* For desktop: */
+      .image-cover {
+        background-size: cover;
+      }
+
+      .bg-premium {
+        height: calc(min(350px, 50vw) + 5rem);
+      }
+
+      .ayat-container {
+        width: 50%;
+        padding: 0;
+        display: inline-block;
+      }
+
+      .ayat {
+        font-size: 16px;
+      }
+
+      .paper-container {
+        padding: 2rem;
+      }
+
+      .perkenalan {
+        height: 700px;
+        width: 70%;
+      }
+
+      .title {
+        top: 10rem;
+        right: -1rem;
+        font-size: 7rem;
+      }
+
+      .title.left {
+        left: -1rem;
+      }
+
+      .name {
+        width: 23rem;
+        height: 10rem;
+        font-size: 0.8rem;
+      }
+
+      .parent {
+        font-size: 1.25em;
+      }
+
+      .fourth-container {
+        font-size: 1.25rem;
+      }
+
+      .fourth-container-image {
+        height: 27em;
+      }
+
+      .fifth-page {
+        font-size: 1rem;
+      }
+
+      .ephron {
+        margin: 0 6rem;
+      }
+
+      .sixth-page {
+        height: 47rem;
+      }
+    }
+  </style>
+  <script>
+    function onBuka() {
+      document.body.classList.add("open");
+    }
+
+    function copyBCA() {
+      var copyText = document.getElementById("bca");
+      var button = document.getElementById("button-salin-bca");
+      navigator.clipboard.writeText(copyText.innerText);
+
+      button.innerText = "Berhasil disalin";
+
+      setTimeout(() => {
+        button.innerHTML = `<svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="16"
+                width="14"
+                viewBox="0 0 448 512"
+              >
+                <path
+                  d="M384 336H192c-8.8 0-16-7.2-16-16V64c0-8.8 7.2-16 16-16l140.1 0L400 115.9V320c0 8.8-7.2 16-16 16zM192 384H384c35.3 0 64-28.7 64-64V115.9c0-12.7-5.1-24.9-14.1-33.9L366.1 14.1c-9-9-21.2-14.1-33.9-14.1H192c-35.3 0-64 28.7-64 64V320c0 35.3 28.7 64 64 64zM64 128c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H256c35.3 0 64-28.7 64-64V416H272v32c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192c0-8.8 7.2-16 16-16H96V128H64z"
+                />
+              </svg>Salin Rekening`;
+      }, 1000);
+    }
+
+    function copyAlamat() {
+      var button = document.getElementById("button-salin-alamat");
+      navigator.clipboard.writeText(
+        "Kp. Kebon Pala RT. 003/005, Desa Lengkong Kulon, Kecamatan Pagedangan, Kabupaten Tangerang - Banten"
+      );
+
+      button.innerText = "Berhasil disalin";
+
+      setTimeout(() => {
+        button.innerHTML = `<svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="16"
+                width="14"
+                viewBox="0 0 448 512"
+              >
+                <path
+                  d="M384 336H192c-8.8 0-16-7.2-16-16V64c0-8.8 7.2-16 16-16l140.1 0L400 115.9V320c0 8.8-7.2 16-16 16zM192 384H384c35.3 0 64-28.7 64-64V115.9c0-12.7-5.1-24.9-14.1-33.9L366.1 14.1c-9-9-21.2-14.1-33.9-14.1H192c-35.3 0-64 28.7-64 64V320c0 35.3 28.7 64 64 64zM64 128c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H256c35.3 0 64-28.7 64-64V416H272v32c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192c0-8.8 7.2-16 16-16H96V128H64z"
+                />
+              </svg>Salin Alamat`;
+      }, 1000);
+    }
+
+    // Set the date we're counting down to
+    var countDownDate = new Date("Dec 8, 2023 08:00:00").getTime();
+
+    // Update the count down every 1 second
+    var x = setInterval(function () {
+      // Get today's date and time
+      var now = new Date().getTime();
+
+      // Find the distance between now and the count down date
+      var distance = countDownDate - now;
+
+      // Time calculations for days, hours, minutes and seconds
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor(
+        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      // Output the result in an element with id="demo"
+
+      document.getElementById("countdown-hari").innerText = days;
+      document.getElementById("countdown-jam").innerText = hours;
+      document.getElementById("countdown-menit").innerText = minutes;
+      document.getElementById("countdown-detik").innerText = seconds;
+
+      // If the count down is over, write some text
+      if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("countdown-hari").innerText = 0;
+        document.getElementById("countdown-jam").innerText = 0;
+        document.getElementById("countdown-menit").innerText = 0;
+        document.getElementById("countdown-detik").innerText = 0;
+      }
+    }, 1000);
+
+    document.addEventListener("read");
+
+    document.addEventListener("DOMContentLoaded", function () {
+      showSnow(true);
+    });
+  </script>
+</head>
+
+<body>
+  <div
+    id="snow"
+    data-count="200"
+    style="
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      pointer-events: none;
+      overflow: hidden;
+      height: 100%;
+      z-index: 99;
+    "
+  ></div>
+  <script src="assets/pure-snow.js" defer></script>
+  <div class="container">
+    <div class="cover-container">
+      <div class="cover">
+        <div class="cover-title">The Wedding Of</div>
+        <div
+          style="
+            font-family: BrittanySignature;
+            font-size: 2.5rem;
+            margin-top: 1rem;
+          "
+        >
+          Febry and Lulu
+        </div>
+        <div style="flex: 1 1 auto"></div>
+        <div
+          style="
+            font-family: LondrinaSolid;
+            letter-spacing: 3px;
+            font-size: 0.75rem;
+            margin-bottom: 0.5rem;
+          "
+        >
+          Kepada Yth
+          <br />
+          Bapak/Ibu/Saudara/i
+        </div>
+        <div
+          style="
+            font-family: LondrinaSolid;
+            font-size: 2rem;
+            letter-spacing: 3px;
+            margin-bottom: 1.5rem;
+          "
+        >
+          Fitria
+        </div>
+        <div style="margin-bottom: 5rem">
+          <button class="button-buka-undangan" onclick="onBuka()">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="16"
+              width="16"
+              viewBox="0 0 512 512"
+            >
+              <path
+                d="M64 208.1L256 65.9 448 208.1v47.4L289.5 373c-9.7 7.2-21.4 11-33.5 11s-23.8-3.9-33.5-11L64 255.5V208.1zM256 0c-12.1 0-23.8 3.9-33.5 11L25.9 156.7C9.6 168.8 0 187.8 0 208.1V448c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V208.1c0-20.3-9.6-39.4-25.9-51.4L289.5 11C279.8 3.9 268.1 0 256 0z"
+              />
+            </svg>
+            Buka Undangan
+          </button>
+        </div>
+      </div>
+      <img src="assets\pic-1.jpg" style="width: 100%" />
+    </div>
+    <div class="content-container">
+      <div class="first-page">
+        <div class="image-cover">
+          <div
+            style="
+              height: 100%;
+              width: 100%;
+              position: absolute;
+              background-image: linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.5) 0%,
+                rgba(255, 255, 255, 0) 50%,
+                rgba(0, 0, 0, 0.5) 100%
+              );
+            "
+          ></div>
+          <div
+            style="
+              width: calc(100% - 4rem);
+              margin: 2rem;
+              position: absolute;
+              height: calc(100% - 4rem);
+              border: 0.2rem solid white;
+              box-sizing: border-box;
+              color: white;
+              display: flex;
+              flex-flow: column;
+              justify-content: space-between;
+              align-items: center;
+            "
+          >
+            <div class="cover-title" style="margin-top: 2rem">
+              The Wedding Of
+            </div>
+            <div
+              style="
+                font-family: BrittanySignature;
+                font-size: 2.5rem;
+                margin-bottom: 1rem;
+              "
+            >
+              Febry and Lulu
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="second-page"
+        style="
+          color: white;
+          background-color: #2b2b2b;
+          font-family: serif;
+          text-align: center;
+        "
+      >
+        <div class="bg-premium"></div>
+        <div style="padding-bottom: 2rem">
+          <div
+            style="margin-top: calc(min(350px, 50vw) * -1); margin-bottom: 2rem"
+          >
+            <div
+              style="
+                margin: 0 2.5rem; /*! height: max(405px, 100vw); */
+                position: relative;
+              "
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                style="
+                  /*! transform: scale(1, 0.75) translateY(-17%); */
+                  /*! position: absolute; */
+                  left: 0;
+                  top: 0;
+                  width: 100%;
+                  z-index: 1;
+                  fill: white;
+                  color: white;
+                "
+                id="Layer_1"
+                viewBox="0 0 311 375"
+              >
+                <defs>
+                  <style>
+                    .cls-1 {
+                      fill: #fff;
+                    }
+                  </style>
+                </defs>
+                <g id="OBJECTS" style="transform: scaleY(0.75)">
+                  <path
+                    class="cls-1"
+                    d="M196.68,496.88l-4.52-.41-3.77,.66-1.63-.96-2.37,1.14-1.32,1.31-3.91-1.94-8.14-1.8-.27-1.09-3.6,.1-4.1-.84-6.36,3.33,.73-2.9-2.43,1.16-3.68-.45-4.77,.55-2.87-3.69-1.65,.03-1.97-.38-6.85,3.86-1.63-1.69-1.09-1.6-4.06,.56-1.72-1.67-5.88,1.75-2.72-1.06-3.87,.76-1.69,.43-1.34,.55-3.6,.13-1.7-.17-2.7,2.58-3.56-1.47-5.53,2.75-4.25-3.06-2.18,.53-.5,.94-2.81,.63-5.13,.63-6.15,1.46-3.45,1.46-1.53-1.85-1.19-1.97-5.04,.2-7.14,2-3.77-2.96-5,1.75-1.42-1.44-1.28-.78-1.57,1.17-2.01-1.7-5.15-.94-3.12-.2,.13-.63-5.04-.86-3.87,1.29-5.36,.36-3.2,3.06-2.76-1.65v-.02l-.04,.02-5.25-16.83,1.13-3.47,.52-6,1.86-13.78-2.14-10.54,1.07-16.56-2.41-18.46,.27-10.21,.96-5.44-2.11-9.38,1.38-5.71-.54-6.34-.65-7.89-.63-17.68-1.03-12.42,.23-17.59,1.15-3.52-.8-15.02-.38-7.76,.94-7.25-.84-3.33,1-4.14-.29-2.81,1.65-3.11-2.01-9.18-1.24-8.3,1.63-6.25,.23-4.96,.61-3.44-.54-5.72,.02-5.24-.59-9.12-.04-9.43-1.9-12.64,.23-9.91,1.51-4.45-.82-6.37-1.47-6.77,.86-3.19,.34-2.68,1.28,.03,.5-10.29-.86-7.78-.15-8.29-.54-5.89,.34-1.22,1.17-10.92-2.11-12.03,.5-3.87v-9.22l.25-8.06,1.38-4.04,.92-10.26,.59-6.78,1.23-10.36,.86-3.21-1.44-3.29-1.9-12.24,1.19-17.55,.19-5.11,.4-1.27-.06-2.63,6.8,1.87,1.03,.23,2.57-1.49,7.18,2.02,4.73-3.31,1.28,.55,1.95,1.19,5.34,1.04,6.07,.17,4.04-1.11,2.47,.5,2.47-1.27,3.22,.45,3.35-1.34,1.88,.45,.9,1.21,3.29-1.03,3.06,.17,4.65,.26,3.89,.78,6.55-.63,2.93,1.32,1.82-.69,3.1-.15,2.78-.88,3.91-1.24,1.3,.31,6.22-3.26-.61,2.3,3.31-2.37,6.89-1.42,3.93-1.27,4.33,2.25,2.05,.41,2.51-.33,6.63-1.01,2.03,.28,2.51-.6,4.31,1.6,4.96-2.45,3.68,2.38,5.59-.35,1.78-.17,2.74-1.24,3.39-.4,.79,1.17,.71,1.9,3.48-1.42,3.29,.45,3.29,.35,3.5-.65,3.56,.89,3.94,.15,2.6-.38,2.78-1.74,2.68-.69,1.51,.69,4.06,.23,.75,.93,1.21,1.01,1.95-1.11,2.83,.51,2.43,.55,3.93-.56,8.39-1.16,2.6-.93,1.53,.91,1.68,1.62,1.95-.08,1.76,.36,1.28-.23,4.06,.81,2.72,.2,1.03-1.19,5.32-.69,3.14-1.19,1.01-.46,4.63,1.39,3.14,1.87,3.1-1.24,3.35-1.26,2.43,1.01,2.32-.96,1.59-1.26,2.55,.91,2.99,1.52h2.8l4.06-.12,.59,.55,1.57,.73,.63,.28,.54-.31,10.32-.17,.96,.13,4.65-.23,8.27,13.32,.67,9.18-.67,11.55-.33,9.46-1.61,6.02,.92,3.06,.63,9.48-2.68,6.45,1.11,7.64,.12,3.47,1.57,10.31-1.93,3.67,2.39,11.25-.59,13.02,1.42,1.94-.67,6.43-1.15-.13,1.03,3.14,.46,6.9,.02,4.15,.13,1.52-2.09,3.44,.88,9.51-1.23,25.68,.92,7.18,.46,13.65-1.86,4.37,.44,10.06-1.3,5.51,1.05,7.74,.19,8.93-2.78,4.65,.98,9.55-.19,8.11-.94,3.24,.8,3.42-1.32,4.91,.34,11.8,.27,10.65,.29,11.7-.21,7.11,1.32,8.24-1.59,.43-.56,11.48,1.49,12.01-2.18,7.2,2.05,8.59-1.07,6.58,.71,1.92,1.07,17.34,1.42,3.62-.61,10.6-.84,3.54,.67,9.6,.63,13.25-1.15,2.85,.4,6.04-.29,3.32-1.61,4.27-.57,.56,1.32,9.93-.36,4.91,.02,3.19,.31,5.72-1.3,.13,1.95,10.67-.5,3.31-4.52,8.85-.96,.17-3.16-.68-2.99,.74-8.77,2.81-4.82-1.42-2.11-.1-5.02,1.16-1.17-1.02-2.66,.73-5-.28-4.33,.28-2.24-2.09-6.28,2.76-2.85-1.39-4.17,.78-2.39,.23-.9-.71-4.38,.61-1.22-.27-2.68,.46-5.21,.69-3.33,.1-4.54,2.71-.77-2.3-1.84-.69-1.86-.3-1.99-.74-1.32,.98-4.12-2.03-1.82,1.8-1.97,.81-2.01,.55-3.2-.86h-1.59l-1.34-1.32Z"
+                  ></path>
+                </g>
+              </svg>
+              <div class="paper-container">
+                <div
+                  style="
+                    height: 100%;
+                    width: 100%;
+                    overflow: hidden;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                  "
+                >
+                  <img src="assets\pic-1.jpg" style="width: 100%" />
+                </div>
+              </div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 258 110"
+                style="
+                  /*! display: none; */
+                  position: absolute;
+                  z-index: 2;
+                  opacity: 0.75;
+                  width: 8rem;
+                  left: 50%;
+                  transform: translateX(-50%);
+                  top: -0.5rem;
+                "
+                id="Layer_2"
+              >
+                <defs>
+                  <style>
+                    .cls-2 {
+                      fill: #2b2b2b;
+                    }
+                  </style>
+                </defs>
+                <g id="Layer_1-3">
+                  <path
+                    d="M257.74,31.05v-.94l-.4-1.56-.84-.72,.95,.03,.56-1.46-1.18-.44,.49-2.95-1.97-2.54,1.59-.83-1.29-2.33-.12-.79-.92-1.73,2.23-1.46-.53-2.15-.76-.69,1.33-1.36,.29-2.14,.56-2.61-.56-2.08-.07-2.3H4.09l.04,.59-.32,.29-.16,1.16-1,3.98,1.58,2.77,1.19,.74-.71,.73-1.02,2.35-.48,1.54-.76,2.32-1.15,.91-.2,1.83v2.09l-.42,.87,1.75,2.72-.97,2.47-.27,.28,.45,1.33,.11,1.88,.72,1.76-.41,2.33H.99l-.27,.6-.72,.72,1.22,1.53,.66,1.44-1.24,1.01-.19,2.24,1.58,2.86,.04,2.14,.48,2.06v1.18l.44,1.3-.51,.78-.2,1.12-1.35,1.42,1.03,1.88,1.66,2.08-1.38,.7,.24,.64-.83,.94,.7,.76-.78,1.64,.31,1.76,.66,3.4-.95,.8-.21,3.98,.87,2.81,.51,4,.55,1.79,.45,1.43-1.15,1.29,1.76,2.13-.81,1.23-.22,2.32,1.98,4.18-.88,3.75,1.77,2.39-1.54,3.12-.43,1.36-.94,.78,1.77,3.52H253.36l.68-1.51,.41-.75-1.62-2.42,1.08-.03-.26-1.29-.02-.72,.3-1.11-1.09-2.25,.45-.13,1.35-.96,.24-.76-.34-1.37,.96-.65-.52-3-.56-2.17,.7-.8,.5-2.4-1.19-.82-.88-3.93-.58-.43,.89-1.49-1.7-1.95,1.8-1.63-1.23-2.72,.46-2.6,1.33-.09-1.09-1.87,.18-1.61-.25-2.65-.22-2.41-.27-2.67,1.08-1.12-.65-.77,.78-.73,.15-1.83-.82-2.17,2.31-1.06-.16-2.02-.86-1.76,1.08-1.24-.37-2.28,1.54-.99-.39-3.09-.75-1.62,1.01-5.82-.72-2.15,1.74-.78-.11-.35Z"
+                    class="cls-2"
+                  ></path>
+                </g>
+              </svg>
+            </div>
+          </div>
+          <div>HITUNG MUNDUR</div>
+          <div
+            style="
+              font-family: BrittanySignature;
+              color: rgb(227, 184, 78);
+              font-size: 2rem;
+              font-style: italic;
+              padding-bottom: 1rem;
+            "
+          >
+            Hari Bahagia Kami
+          </div>
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              gap: 2rem;
+              font-family: Segoe UI;
+            "
+          >
+            <div
+              style="
+                width: 1.5rem;
+                display: flex;
+                flex-flow: column;
+                align-items: center;
+                justify-content: center;
+              "
+            >
+              <div style="font-size: 2rem" id="countdown-hari">16</div>
+              <div style="color: rgb(227, 184, 78); font-size: 10px">Hari</div>
+            </div>
+            <div
+              style="
+                width: 1.5rem;
+                display: flex;
+                flex-flow: column;
+                align-items: center;
+                justify-content: center;
+              "
+            >
+              <div style="font-size: 2rem" id="countdown-jam">0</div>
+              <div style="color: rgb(227, 184, 78); font-size: 10px">Jam</div>
+            </div>
+            <div
+              style="
+                width: 1.5rem;
+                display: flex;
+                flex-flow: column;
+                align-items: center;
+                justify-content: center;
+              "
+            >
+              <div style="font-size: 2rem" id="countdown-menit">0</div>
+              <div style="color: rgb(227, 184, 78); font-size: 10px">Menit</div>
+            </div>
+            <div
+              style="
+                width: 1.5rem;
+                display: flex;
+                flex-flow: column;
+                align-items: center;
+                justify-content: center;
+              "
+            >
+              <div style="font-size: 2rem" id="countdown-detik">50</div>
+              <div style="color: rgb(227, 184, 78); font-size: 10px">Detik</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="third-page">
+        <div
+          class="bg-premium"
+          style="height: auto; text-align: center; padding-bottom: 3rem"
+        >
+          <div class="ayat-container">
+            <img
+              style="width: 80px; margin-bottom: 1rem; padding-top: 3rem"
+              src="assets\ring-300x282.png"
+            />
+            <div class="ayat" style="">
+              وَمِنْ اٰيٰتِهٖٓ اَنْ خَلَقَ لَكُمْ مِّنْ اَنْفُسِكُمْ اَزْوَاجًا
+              لِّتَسْكُنُوْٓا اِلَيْهَا وَجَعَلَ بَيْنَكُمْ مَّوَدَّةً
+              وَّرَحْمَةً ۗاِنَّ فِيْ ذٰلِكَ لَاٰيٰتٍ لِّقَوْمٍ يَّتَفَكَّرُوْنَ
+              .
+            </div>
+            <div style="font-size: 12px; margin-top: 1rem">
+              Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan
+              pasangan-pasangan untukmu dari jenismu sendiri, agar kamu
+              cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di
+              antaramu rasa kasih dan sayang. Sungguh, pada yang demikian itu
+              benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum yang
+              berpikir.
+            </div>
+            <div
+              style="
+                color: rgb(158, 121, 48);
+                margin-top: 1rem;
+                font-weight: 600;
+                font-size: 13px;
+                padding-bottom: 2rem;
+                font-family: Wasted Vindey;
+              "
+            >
+              QS. AR-RUM : 21
+            </div>
+          </div>
+          <div
+            style="padding-bottom: 3rem; position: relative; text-align: center"
+          >
+            <div class="perkenalan">
+              <img src="assets\lulu.jpg" style="width: 100%" />
+              <div
+                style="
+                  left: 0;
+                  position: absolute;
+                  top: 0;
+                  height: 100%;
+                  width: 100%;
+                  box-sizing: border-box;
+                  padding: 1.5rem;
+                "
+              >
+                <div
+                  style="
+                    width: 100%;
+                    height: 100%;
+                    border: 4px solid white;
+                    box-sizing: border-box;
+                  "
+                ></div>
+              </div>
+            </div>
+            <div class="title">TheBride</div>
+            <div class="name">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 258 110"
+                id="Layer_2"
+                style="
+                  position: absolute;
+                  z-index: 0;
+                  width: 100%;
+                  left: 0;
+                  top: 0;
+                "
+              >
+                <defs>
+                  <style>
+                    .cls-2 {
+                      fill: #2b2b2b;
+                    }
+                  </style>
+                </defs>
+                <g id="Layer_1-3">
+                  <path
+                    d="M257.74,31.05v-.94l-.4-1.56-.84-.72,.95,.03,.56-1.46-1.18-.44,.49-2.95-1.97-2.54,1.59-.83-1.29-2.33-.12-.79-.92-1.73,2.23-1.46-.53-2.15-.76-.69,1.33-1.36,.29-2.14,.56-2.61-.56-2.08-.07-2.3H4.09l.04,.59-.32,.29-.16,1.16-1,3.98,1.58,2.77,1.19,.74-.71,.73-1.02,2.35-.48,1.54-.76,2.32-1.15,.91-.2,1.83v2.09l-.42,.87,1.75,2.72-.97,2.47-.27,.28,.45,1.33,.11,1.88,.72,1.76-.41,2.33H.99l-.27,.6-.72,.72,1.22,1.53,.66,1.44-1.24,1.01-.19,2.24,1.58,2.86,.04,2.14,.48,2.06v1.18l.44,1.3-.51,.78-.2,1.12-1.35,1.42,1.03,1.88,1.66,2.08-1.38,.7,.24,.64-.83,.94,.7,.76-.78,1.64,.31,1.76,.66,3.4-.95,.8-.21,3.98,.87,2.81,.51,4,.55,1.79,.45,1.43-1.15,1.29,1.76,2.13-.81,1.23-.22,2.32,1.98,4.18-.88,3.75,1.77,2.39-1.54,3.12-.43,1.36-.94,.78,1.77,3.52H253.36l.68-1.51,.41-.75-1.62-2.42,1.08-.03-.26-1.29-.02-.72,.3-1.11-1.09-2.25,.45-.13,1.35-.96,.24-.76-.34-1.37,.96-.65-.52-3-.56-2.17,.7-.8,.5-2.4-1.19-.82-.88-3.93-.58-.43,.89-1.49-1.7-1.95,1.8-1.63-1.23-2.72,.46-2.6,1.33-.09-1.09-1.87,.18-1.61-.25-2.65-.22-2.41-.27-2.67,1.08-1.12-.65-.77,.78-.73,.15-1.83-.82-2.17,2.31-1.06-.16-2.02-.86-1.76,1.08-1.24-.37-2.28,1.54-.99-.39-3.09-.75-1.62,1.01-5.82-.72-2.15,1.74-.78-.11-.35Z"
+                    class="cls-2"
+                  ></path>
+                </g>
+              </svg>
+              <div
+                style="
+                  color: white;
+                  z-index: 1;
+                  position: relative;
+                  color: rgb(227, 184, 78);
+                  font-size: 2.5em;
+                "
+              >
+                Lulu Apriyani
+              </div>
+              <div class="parent">Putri dari Bapak Sanen &amp; Ibu Maryati</div>
+            </div>
+          </div>
+          <div
+            style="
+              padding-bottom: 3rem;
+              position: relative;
+              text-align: center;
+              margin-top: 5rem;
+            "
+          >
+            <div class="perkenalan" style="margin-left: auto">
+              <img src="assets\febry.jpg" style="width: 100%" />
+              <div
+                style="
+                  left: 0;
+                  position: absolute;
+                  top: 0;
+                  height: 100%;
+                  width: 100%;
+                  box-sizing: border-box;
+                  padding: 1.5rem;
+                "
+              >
+                <div
+                  style="
+                    width: 100%;
+                    height: 100%;
+                    border: 4px solid white;
+                    box-sizing: border-box;
+                  "
+                ></div>
+              </div>
+            </div>
+            <div class="title left">TheGroom</div>
+            <div class="name">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 258 110"
+                id="Layer_2"
+                style="
+                  position: absolute;
+                  z-index: 0;
+                  width: 100%;
+                  left: 0;
+                  top: 0;
+                "
+              >
+                <defs>
+                  <style>
+                    .cls-2 {
+                      fill: #2b2b2b;
+                    }
+                  </style>
+                </defs>
+                <g id="Layer_1-3">
+                  <path
+                    d="M257.74,31.05v-.94l-.4-1.56-.84-.72,.95,.03,.56-1.46-1.18-.44,.49-2.95-1.97-2.54,1.59-.83-1.29-2.33-.12-.79-.92-1.73,2.23-1.46-.53-2.15-.76-.69,1.33-1.36,.29-2.14,.56-2.61-.56-2.08-.07-2.3H4.09l.04,.59-.32,.29-.16,1.16-1,3.98,1.58,2.77,1.19,.74-.71,.73-1.02,2.35-.48,1.54-.76,2.32-1.15,.91-.2,1.83v2.09l-.42,.87,1.75,2.72-.97,2.47-.27,.28,.45,1.33,.11,1.88,.72,1.76-.41,2.33H.99l-.27,.6-.72,.72,1.22,1.53,.66,1.44-1.24,1.01-.19,2.24,1.58,2.86,.04,2.14,.48,2.06v1.18l.44,1.3-.51,.78-.2,1.12-1.35,1.42,1.03,1.88,1.66,2.08-1.38,.7,.24,.64-.83,.94,.7,.76-.78,1.64,.31,1.76,.66,3.4-.95,.8-.21,3.98,.87,2.81,.51,4,.55,1.79,.45,1.43-1.15,1.29,1.76,2.13-.81,1.23-.22,2.32,1.98,4.18-.88,3.75,1.77,2.39-1.54,3.12-.43,1.36-.94,.78,1.77,3.52H253.36l.68-1.51,.41-.75-1.62-2.42,1.08-.03-.26-1.29-.02-.72,.3-1.11-1.09-2.25,.45-.13,1.35-.96,.24-.76-.34-1.37,.96-.65-.52-3-.56-2.17,.7-.8,.5-2.4-1.19-.82-.88-3.93-.58-.43,.89-1.49-1.7-1.95,1.8-1.63-1.23-2.72,.46-2.6,1.33-.09-1.09-1.87,.18-1.61-.25-2.65-.22-2.41-.27-2.67,1.08-1.12-.65-.77,.78-.73,.15-1.83-.82-2.17,2.31-1.06-.16-2.02-.86-1.76,1.08-1.24-.37-2.28,1.54-.99-.39-3.09-.75-1.62,1.01-5.82-.72-2.15,1.74-.78-.11-.35Z"
+                    class="cls-2"
+                  ></path>
+                </g>
+              </svg>
+              <div
+                style="
+                  color: white;
+                  z-index: 1;
+                  position: relative;
+                  color: rgb(227, 184, 78);
+                  font-size: 2.5em;
+                "
+              >
+                Febry Valentino
+              </div>
+              <div class="parent">
+                Putra dari Bapak Syukron/Bondan &amp; <br />Ibu
+                Mulyaningsih/Nining
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="fourth-page">
+        <div
+          style="
+            background-image: url('assets/duo.jpg');
+            background-size: cover;
+            background-position: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            filter: grayscale(50%) brightness(60%);
+          "
+        ></div>
+        <div class="fourth-container">
+          <div class="fourth-container-image">
+            <img src="assets\payung.jpg" style="width: 100%" />
+          </div>
+          <div style="display: flex; flex-flow: inherit; align-items: stretch">
+            <div class="container-akad">
+              <div>Akad.Nikah</div>
+            </div>
+            <div
+              style="
+                flex: 1 1 auto;
+                height: 100%;
+                background: white;
+                padding-left: 1.5em;
+                padding-bottom: 1rem;
+              "
+            >
+              <div
+                style="
+                  display: flex;
+                  padding: 1rem 0 1.25rem 0;
+                  border-bottom: 1px solid black;
+                  gap: 1.5em;
+                "
+              >
+                <div
+                  style="
+                    width: 30%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 3em;
+                    color: #9e7930;
+                  "
+                >
+                  8
+                </div>
+                <div
+                  style="
+                    flex: 1 1 auto;
+                    font-size: 0.8em;
+                    color: #9e7930;
+                    display: flex;
+                    align-items: center;
+                  "
+                >
+                  JUMAT<br />
+                  DESEMBER<br />
+                  2023
+                </div>
+              </div>
+              <div
+                style="
+                  padding: 1em 0;
+                  font-size: 0.8em;
+                  display: flex;
+                  align-items: center;
+                  gap: 0.5rem;
+                  font-weight: bold;
+                "
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="16"
+                  width="16"
+                  viewBox="0 0 512 512"
+                >
+                  <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.-->
+                  <path
+                    d="M256 0a256 256 0 1 1 0 512A256 256 0 1 1 256 0zM232 120V256c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2V120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"
+                  ></path>
+                </svg>
+                08.00 WIB - Selesai
+              </div>
+              <div style="color: #9e7930; font-size: 1.2em; margin-top: 0.5em">
+                Lokasi Acara
+              </div>
+              <div
+                style="font-size: 0.75em; font-weight: bold; margin-top: 1em"
+              >
+                Kediaman Mempelai Wanita
+              </div>
+              <div style="font-size: 0.75em; margin-top: 0.5em">
+                Kp. Sampora, Jalan Alsintan No.31, RT. 004/001 Kecamatan Cisauk,
+                Kabupaten Tangerang - Banten
+              </div>
+              <div style="padding: 1rem 0">
+                <a
+                  class="google-map"
+                  href="https://maps.app.goo.gl/tpFdj9XD4qzabnYaA"
+                  role="button"
+                  style="text-decoration: none"
+                  target="_blank"
+                  >GOOGLE MAP</a
+                >
+              </div>
+            </div>
+          </div>
+          <div
+            style="
+              display: flex;
+              flex-flow: inherit;
+              align-items: stretch;
+              margin-top: 1rem;
+            "
+          >
+            <div class="container-akad">
+              <div>Resepsi</div>
+            </div>
+            <div
+              style="
+                flex: 1 1 auto;
+                height: 100%;
+                background: white;
+                padding-left: 1.5em;
+                padding-bottom: 1rem;
+              "
+            >
+              <div
+                style="
+                  display: flex;
+                  padding: 1rem 0 1.25rem 0;
+                  border-bottom: 1px solid black;
+                  gap: 1.5em;
+                "
+              >
+                <div
+                  style="
+                    width: 30%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 2em;
+                    color: #9e7930;
+                  "
+                >
+                  9-10
+                </div>
+                <div
+                  style="
+                    flex: 1 1 auto;
+                    font-size: 0.8em;
+                    color: #9e7930;
+                    display: flex;
+                    align-items: center;
+                  "
+                >
+                  SAPTU - MINGGU<br />
+                  DESEMBER<br />
+                  2023
+                </div>
+              </div>
+              <div
+                style="
+                  padding: 1em 0;
+                  font-size: 0.8em;
+                  display: flex;
+                  align-items: center;
+                  gap: 0.5rem;
+                  font-weight: bold;
+                "
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="16"
+                  width="16"
+                  viewBox="0 0 512 512"
+                >
+                  <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.-->
+                  <path
+                    d="M256 0a256 256 0 1 1 0 512A256 256 0 1 1 256 0zM232 120V256c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2V120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"
+                  ></path>
+                </svg>
+                08.00 WIB - Selesai
+              </div>
+
+              <div style="color: #9e7930; font-size: 1.2em; margin-top: 0.5em">
+                Lokasi Acara
+              </div>
+              <div
+                style="font-size: 0.75em; font-weight: bold; margin-top: 1em"
+              >
+                Kediaman Mempelai Pria
+              </div>
+              <div style="font-size: 0.75em; margin-top: 0.5em">
+                Kp. Kebon Pala RT. 003/005, Desa Lengkong Kulon, Kecamatan
+                Pagedangan, Kabupaten Tangerang - Banten
+              </div>
+              <div style="padding: 1rem 0">
+                <a
+                  class="google-map"
+                  href="https://maps.app.goo.gl/YA3fNU1idkmME8997"
+                  role="button"
+                  style="text-decoration: none"
+                  target="_blank"
+                  >GOOGLE MAP</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="fifth-page">
+        <div style="text-align: center">
+          <img src="assets\gift-solid.svg" style="height: 6em" />
+
+          <div
+            style="
+              font-family: BrittanySignature;
+              font-size: 2em;
+              margin-bottom: 1em;
+            "
+          >
+            Wedding Gift
+          </div>
+          <div
+            style="font-family: Times New Roman; margin-bottom: 1em"
+            class="ephron"
+          >
+            "When you realize you want to spend the rest of your life with
+            sombody, you want the rest of your life to start as soon as
+            possible." - Nora Ephron -
+          </div>
+          <div
+            style="
+              display: flex;
+              flex-flow: column;
+              gap: 0.5rem;
+              align-items: center;
+            "
+          >
+            <div style="margin-top: 2rem">
+              <img
+                src="assets\logo-bca-putih-300x93.png"
+                style="height: 3rem"
+              />
+            </div>
+            <div style="font-weight: bold" id="bca">12345</div>
+            <div style="font-weight: bold">a.n Febry</div>
+            <div
+              id="button-salin-bca"
+              onclick="copyBCA()"
+              style="
+                background-color: #9e7930;
+                color: white;
+                padding: 1em 2em;
+                display: inline-flex;
+                font-weight: bold;
+                border-radius: 1.5rem;
+                cursor: pointer;
+                align-content: center;
+                justify-content: center;
+                gap: 0.5rem;
+                fill: white;
+              "
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="16"
+                width="14"
+                viewBox="0 0 448 512"
+              >
+                <path
+                  d="M384 336H192c-8.8 0-16-7.2-16-16V64c0-8.8 7.2-16 16-16l140.1 0L400 115.9V320c0 8.8-7.2 16-16 16zM192 384H384c35.3 0 64-28.7 64-64V115.9c0-12.7-5.1-24.9-14.1-33.9L366.1 14.1c-9-9-21.2-14.1-33.9-14.1H192c-35.3 0-64 28.7-64 64V320c0 35.3 28.7 64 64 64zM64 128c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H256c35.3 0 64-28.7 64-64V416H272v32c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192c0-8.8 7.2-16 16-16H96V128H64z"
+                />
+              </svg>
+              Salin Rekening
+            </div>
+          </div>
+          <div
+            style="
+              display: flex;
+              flex-flow: column;
+              gap: 0.5rem;
+              align-items: center;
+              margin-top: 2rem;
+              margin-bottom: 2rem;
+            "
+          >
+            <div>Kado Fisik</div>
+            <div>Kirim kado fisik ke alamat kami :</div>
+            <div
+              id="button-salin-alamat"
+              onclick="copyAlamat()"
+              style="
+                background-color: #9e7930;
+                color: white;
+                padding: 1em 2em;
+                display: inline-flex;
+                font-weight: bold;
+                border-radius: 1.5rem;
+                cursor: pointer;
+                align-content: center;
+                justify-content: center;
+                gap: 0.5rem;
+                fill: white;
+              "
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="16"
+                width="14"
+                viewBox="0 0 448 512"
+              >
+                <path
+                  d="M384 336H192c-8.8 0-16-7.2-16-16V64c0-8.8 7.2-16 16-16l140.1 0L400 115.9V320c0 8.8-7.2 16-16 16zM192 384H384c35.3 0 64-28.7 64-64V115.9c0-12.7-5.1-24.9-14.1-33.9L366.1 14.1c-9-9-21.2-14.1-33.9-14.1H192c-35.3 0-64 28.7-64 64V320c0 35.3 28.7 64 64 64zM64 128c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H256c35.3 0 64-28.7 64-64V416H272v32c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192c0-8.8 7.2-16 16-16H96V128H64z"
+                ></path>
+              </svg>
+              Salin Alamat
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="sixth-page">
+        <div style="font-size: 1.5rem">Thank You</div>
+        <div
+          style="
+            font-family: BrittanySignature;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+          "
+        >
+          Febry and Lulu
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
